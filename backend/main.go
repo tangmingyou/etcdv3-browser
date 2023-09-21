@@ -22,6 +22,8 @@ var (
 	etcdEndpoints  = env("ETCD", "etcd:2379", "comma-separated list of etcd endpoints")
 	editable       = envInt("EDITABLE", 0, "enable update functionality")
 	pprof          = envInt("PPROF", 0, "enable /debug/pprof endpoint")
+	etcdUser       = env("ETCD_USER", "etcd:2379", "comma-separated list of etcd endpoints")
+	etcdPassword   = env("ETCD_PASSWORD", "etcd:2379", "comma-separated list of etcd endpoints")
 )
 
 func main() {
@@ -29,6 +31,8 @@ func main() {
 
 	etcdClient, err := clientv3.New(clientv3.Config{
 		Endpoints:            strings.Split(etcdEndpoints, ","),
+		Username:             etcdUser,
+		Password:             etcdPassword,
 		DialTimeout:          7 * time.Second,
 		DialKeepAliveTime:    30 * time.Second,
 		DialKeepAliveTimeout: 10 * time.Second,
