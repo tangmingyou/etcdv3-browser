@@ -4,7 +4,7 @@ RUN apk --no-cache add ca-certificates git
 WORKDIR /build/etcdv3-browser
 
 COPY backend/go.mod backend/go.sum ./
-RUN go mod download
+RUN go env -w GO111MODULE=on && go env -w GOPROXY=https://goproxy.cn,direct && go mod download
 
 COPY backend/ ./
 RUN CGO_ENABLED=0 go test -v ./...
